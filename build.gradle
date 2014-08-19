@@ -51,7 +51,7 @@ subprojects {
         key = BINTRAY_KEY
         configurations = ['published', 'archives']
         dryRun = false
-        publish = false
+        publish = true
         pkg {
             repo = 'maven'
             userOrg = 'binarta'
