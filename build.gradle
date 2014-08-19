@@ -29,7 +29,9 @@ subprojects {
     repositories {
         if(!releaseBuild) mavenLocal()
         jcenter()
-        maven url:"http://dl.bintray.com/binarta/maven"
+        maven {
+            url "http://dl.bintray.com/binarta/maven"
+        }
         mavenCentral()
 
     }
