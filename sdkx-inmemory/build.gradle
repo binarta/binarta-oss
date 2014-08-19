@@ -1,0 +1,15 @@
+boolean isReleaseBuild() {
+    System.getenv('BUILD_NUMBER')
+}
+
+String getDependencyVersion() {
+    releaseBuild ? '[0,)' : '0-SNAPSHOT'
+}
+
+def resolve(String moduleName) {
+    releaseBuild ? "$group:$moduleName:$dependencyVersion" : project(":$moduleName")
+}
+
+dependencies {
+    compile resolve('sdk')
+}

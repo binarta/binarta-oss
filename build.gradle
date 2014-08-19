@@ -1,0 +1,85 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.5'
+        classpath 'org.codehaus.groovy:groovy-all:2.3.2'
+    }
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'groovy'
+    apply plugin: 'maven'
+    apply plugin: 'com.jfrog.bintray'
+
+    group = 'binarta.oss'
+    def releaseBuild = System.getenv('BUILD_NUMBER')
+    version = releaseBuild ? "${System.getenv('BUILD_NUMBER')}" : '0-SNAPSHOT'
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    configurations {
+        deployerJars
+        tests
+        published.extendsFrom tests, deployerJars, archives
+    }
+
+    repositories {
+        if(!releaseBuild) mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task testJar(type: Jar) {
+        classifier = 'tests'
+        from sourceSets.test.output
+    }
+
+    artifacts {
+        archives sourcesJar, testJar
+    }
+
+    bintray {
+        user = BINTRAY_USER
+        key = BINTRAY_KEY
+        configurations = ['published', 'archives']
+        dryRun = false
+        publish = false
+        pkg {
+            repo = 'maven'
+            userOrg = 'binarta'
+            name = project.name
+            websiteUrl = 'https://github.com/binarta/binarta-oss'
+            issueTrackerUrl = 'https://github.com/binarta/binarta-oss/issues'
+            vcsUrl = 'https://github.com/binarta/binarta-oss.git'
+            licenses = ['GPL-3.0']
+            publicDownloadNumbers = true
+        }
+    }
+
+    install {
+        configuration = configurations.published
+    }
+
+    dependencies {
+        compile 'org.codehaus.groovy:groovy-all:2.3.2'
+        compile 'org.slf4j:jcl-over-slf4j:1.7.4'
+        testCompile 'junit:junit:4.11'
+        testCompile 'junit:junit-dep:4.11'
+        testCompile 'de.bechte.junit:junit-hierarchicalcontextrunner:4.11.2'
+        testCompile "org.spockframework:spock-core:0.7-groovy-2.0", {
+            exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+            exclude group: 'junit', module: 'junit-dep'
+        }
+        testCompile 'org.slf4j:slf4j-log4j12:1.7.4'
+        testCompile "cglib:cglib-nodep:2.2"
+        deployerJars "org.apache.maven.wagon:wagon-http:1.0-beta-2"
+    }
+}
