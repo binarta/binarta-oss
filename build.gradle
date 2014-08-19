@@ -28,8 +28,10 @@ subprojects {
 
     repositories {
         if(!releaseBuild) mavenLocal()
-        mavenCentral()
         jcenter()
+        maven url:"http://dl.bintray.com/binarta/maven"
+        mavenCentral()
+
     }
 
     task sourcesJar(type: Jar) {
