@@ -12,8 +12,7 @@ def resolve(String moduleName) {
 
 dependencies {
     compile resolve('sdk')
-    compile "org.spockframework:spock-core:0.7-groovy-2.0", {
-        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
-        exclude group: 'junit', module: 'junit-dep'
-    }
+    compile resolve('rest-client')
+    compile "com.google.guava:guava:[18,)"
+    testCompile resolve('sdkx-inmemory')
 }

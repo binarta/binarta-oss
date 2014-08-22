@@ -1,2 +1,4 @@
-include 'sdk',
-        'sdkx-inmemory'
+include 'rest-client',
+        'sdk',
+        'sdkx-inmemory',
+        'sdkx-rest'

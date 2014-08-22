@@ -19,8 +19,8 @@ class InMemoryBinartaClient implements BinartaClient {
         permissionPredicates[namespace] << [entity:args.entity, context:args.action, permission: args.permission]
     }
 
-    def getRequiredPermissions(args) {
-        permissionPredicates[namespace].findAll { it.entity == args.entity && it.context == args.action }.collect { it.permission }
+    def getRequiredPermission(args) {
+        permissionPredicates[namespace].find { it.entity == args.entity && it.context == args.action }.permission
     }
 
     void setNamespace(namespace) {
