@@ -1,0 +1,11 @@
+dependencies {
+    compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2', {
+        exclude group:'org.codehaus.groovy', module: 'groovy'
+    }
+
+    testCompile 'org.eclipse.jetty:jetty-server:latest.integration', {
+        exclude group:'org.eclipse.jetty.orbit', module:'javax.servlet'
+    }
+    testCompile 'javax.servlet:javax.servlet-api:latest.integration'
+}
+
