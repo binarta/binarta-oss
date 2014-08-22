@@ -8,6 +8,7 @@ class IsAuthenticationRequiredOperation {
     def execute(args) {
         def data = operation.execute(method:'get', args: [
             path: "/config/requires.authentication.$args.entity.$args.action",
+            query: [type:'boolean'],
             requestContentType: HTML
         ])
         return data.value.toBoolean()

@@ -60,6 +60,17 @@ class RestRequiresPermissionSpec extends RequiresPermissionSpec {
         thrown BinartaClient.Forbidden
     }
 
+    def "handle 404"() {
+        given:
+        restClient._ >> new FakeResponse(status:404)
+
+        when:
+        client.requiresPermission([:])
+
+        then:
+        thrown BinartaClient.NotFound
+    }
+
     def "handle 500"() {
         given:
         restClient.post(_) >> new FakeResponse(status: 500, data: 'data')

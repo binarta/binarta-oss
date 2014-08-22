@@ -26,6 +26,7 @@ class RestIsAuthRequiredSpec extends IsAuthRequiredSpec {
     def authenticationWasRegistered(args) {
         restClient.get([
             path   : "/config/requires.authentication.$args.entity.$args.action",
+            query: [type:'boolean'],
             headers: [
                 'X-Namespace': 'N',
                 Authorization: "Binarta ${base64().encode("$namespace:U:P".bytes)}"
@@ -55,6 +56,17 @@ class RestIsAuthRequiredSpec extends IsAuthRequiredSpec {
 
         then:
         thrown BinartaClient.Forbidden
+    }
+
+    def "handle 404"() {
+        given:
+        restClient._ >> new FakeResponse(status:404)
+
+        when:
+        client.isAuthenticationRequired([:])
+
+        then:
+        thrown BinartaClient.NotFound
     }
 
     def "registering auth req throws error"() {

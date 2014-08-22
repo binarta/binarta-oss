@@ -8,6 +8,7 @@ class RestOperation {
     static responseHandlers = [
         '401': { throw new BinartaClient.Unauthorized() },
         '403': { throw new BinartaClient.Forbidden() },
+        '404': {throw new BinartaClient.NotFound()},
         '500': { throw new BinartaClient.Error(it) },
         '200': {it}
     ]

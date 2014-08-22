@@ -60,6 +60,17 @@ class RestRequiresAuthenticationSpec extends RequiresAuthenticationSpec {
         thrown BinartaClient.Forbidden
     }
 
+    def "handle 404"() {
+        given:
+        restClient._ >> new FakeResponse(status:404)
+
+        when:
+        client.requiresAuthentication([:])
+
+        then:
+        thrown BinartaClient.NotFound
+    }
+
     def "registering auth req throws error"() {
         given:
         restClient.post(_) >> new FakeResponse(status: 500, data: 'data')

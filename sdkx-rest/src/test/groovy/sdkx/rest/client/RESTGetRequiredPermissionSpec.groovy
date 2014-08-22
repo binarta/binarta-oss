@@ -26,6 +26,7 @@ class RestGetRequiredPermissionSpec extends IsPermissionRequiredSpec {
     def permissionRequirementWasRegistered(args) {
         restClient.get([
             path   : "/config/requires.permission.$args.entity.$args.action",
+            query: [type:'boolean'],
             headers: [
                 'X-Namespace': namespace,
                 Authorization: "Binarta ${base64().encode("$namespace:U:P".bytes)}"
@@ -54,6 +55,17 @@ class RestGetRequiredPermissionSpec extends IsPermissionRequiredSpec {
 
         then:
         thrown BinartaClient.Forbidden
+    }
+
+    def "handle 404"() {
+        given:
+        restClient._ >> new FakeResponse(status:404)
+
+        when:
+        client.getRequiredPermission([:])
+
+        then:
+        thrown BinartaClient.NotFound
     }
 
     def "handle 500"() {

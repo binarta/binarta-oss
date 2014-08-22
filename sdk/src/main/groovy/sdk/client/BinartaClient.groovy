@@ -15,6 +15,9 @@ interface BinartaClient {
     class Forbidden extends RuntimeException {}
 
     @CompileStatic
+    class NotFound extends RuntimeException {}
+
+    @CompileStatic
     static class Error extends RuntimeException {
         Error(message) {super(message as String) }
     }
