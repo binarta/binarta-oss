@@ -8,7 +8,6 @@ class GetRequiredPermissionOperation {
     def execute(args) {
         def data = delegate.execute(method:'get', args: [
             path: "config/requires.permission.$args.entity.$args.action",
-            query: [type:'boolean'],
             requestContentType: HTML
         ])
         return data.value.toString()

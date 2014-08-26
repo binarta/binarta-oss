@@ -27,7 +27,6 @@ class RestGetRequiredPermissionSpec extends IsPermissionRequiredSpec {
     def permissionRequirementWasRegistered(args) {
         restClient.get([
             path   : "config/requires.permission.$args.entity.$args.action",
-            query: [type:'boolean'],
             headers: [
                 'X-Namespace': namespace,
                 Authorization: "Binarta ${base64().encode("$namespace:U:P".bytes)}"
