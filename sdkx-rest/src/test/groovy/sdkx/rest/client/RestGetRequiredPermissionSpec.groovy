@@ -8,7 +8,7 @@ import sdkx.inmemory.client.IsPermissionRequiredSpec
 import static com.google.common.io.BaseEncoding.base64
 import static groovyx.net.http.ContentType.HTML
 
-class RestGetRequiredPermissionSpec2 extends IsPermissionRequiredSpec {
+class RestGetRequiredPermissionSpec extends IsPermissionRequiredSpec {
     def restClient = GroovyMock(RestClient)
     RestBinartaClient client
 
