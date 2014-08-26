@@ -13,6 +13,7 @@ class RestRequiresPermissionSpec extends RequiresPermissionSpec {
     RestBinartaClient client = new RestBinartaClient(namespace:namespace, username:'U', password:'P')
 
     def setup() {
+        RestBinartaClient.mergeLocalConfig = false
         RestClientFactory.metaClass.static.clientFor = {String baseUrl->
             restClient
         }
@@ -25,7 +26,7 @@ class RestRequiresPermissionSpec extends RequiresPermissionSpec {
 
     def permissionRequirementWasRegistered(args) {
         1 * restClient.post([
-            path              : '/config',
+            path              : 'config',
             body              : [
                 id   : "requires.permission.$args.entity.$args.action",
                 value: args.permission

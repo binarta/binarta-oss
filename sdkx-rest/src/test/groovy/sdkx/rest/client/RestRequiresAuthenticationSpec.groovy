@@ -13,6 +13,7 @@ class RestRequiresAuthenticationSpec extends RequiresAuthenticationSpec {
     RestBinartaClient client
 
     def setup() {
+        RestBinartaClient.mergeLocalConfig = false
         RestClientFactory.metaClass.static.clientFor = {String baseUrl->
             restClient
         }
@@ -25,7 +26,7 @@ class RestRequiresAuthenticationSpec extends RequiresAuthenticationSpec {
 
     def authenticationRequirementWasRegistered(args) {
         1 * restClient.post([
-            path              : '/config',
+            path              : 'config',
             body              : [
                 id   : "requires.authentication.$args.entity.$args.action",
                 value: true

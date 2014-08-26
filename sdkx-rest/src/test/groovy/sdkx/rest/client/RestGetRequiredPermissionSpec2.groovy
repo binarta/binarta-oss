@@ -8,11 +8,12 @@ import sdkx.inmemory.client.IsPermissionRequiredSpec
 import static com.google.common.io.BaseEncoding.base64
 import static groovyx.net.http.ContentType.HTML
 
-class RestGetRequiredPermissionSpec extends IsPermissionRequiredSpec {
+class RestGetRequiredPermissionSpec2 extends IsPermissionRequiredSpec {
     def restClient = GroovyMock(RestClient)
     RestBinartaClient client
 
     def setup() {
+        RestBinartaClient.mergeLocalConfig = false
         RestClientFactory.metaClass.static.clientFor = { String baseUrl ->
             return restClient
         }
@@ -25,7 +26,7 @@ class RestGetRequiredPermissionSpec extends IsPermissionRequiredSpec {
 
     def permissionRequirementWasRegistered(args) {
         restClient.get([
-            path   : "/config/requires.permission.$args.entity.$args.action",
+            path   : "config/requires.permission.$args.entity.$args.action",
             query: [type:'boolean'],
             headers: [
                 'X-Namespace': namespace,

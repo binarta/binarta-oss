@@ -5,7 +5,7 @@ class RequiresAuthenticationOperation {
 
     def execute(args) {
         delegate.execute(method: 'post', args: [
-            path: '/config',
+            path: 'config',
             body: [
                 id   : "requires.authentication.${args.entity}.${args.action}".toString(),
                 value: true

@@ -5,7 +5,7 @@ class RequiresPermissionOperation {
 
     def execute(args) {
         delegate.execute(method: 'post', args: [
-            path: '/config',
+            path: 'config',
             body: [
                 id   : "requires.permission.${args.entity}.${args.action}".toString(),
                 value: args.permission

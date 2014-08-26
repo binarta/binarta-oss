@@ -13,6 +13,7 @@ class RestIsAuthRequiredSpec extends IsAuthRequiredSpec {
     RestBinartaClient client
 
     def setup() {
+        RestBinartaClient.mergeLocalConfig = false
         RestClientFactory.metaClass.static.clientFor = { String baseUrl ->
             return restClient
         }
@@ -25,7 +26,7 @@ class RestIsAuthRequiredSpec extends IsAuthRequiredSpec {
 
     def authenticationWasRegistered(args) {
         restClient.get([
-            path   : "/config/requires.authentication.$args.entity.$args.action",
+            path   : "config/requires.authentication.$args.entity.$args.action",
             query: [type:'boolean'],
             headers: [
                 'X-Namespace': 'N',

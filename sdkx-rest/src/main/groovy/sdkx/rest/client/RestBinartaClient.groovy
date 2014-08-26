@@ -9,16 +9,24 @@ import static com.google.common.io.BaseEncoding.base64
 import static groovyx.net.http.ContentType.JSON
 
 class RestBinartaClient implements BinartaClient {
+    private static mergeLocalConfig = true
+
     def factory = new OperationFactory()
     def config
 
     RestBinartaClient(args) {
         config = new ConfigSlurper(args.env).parse(BinartaConfig)
+        config.merge(localConfig(args))
         factory.restClient = clientFor(config.baseUrl)
         factory.defaultArgs = [
             headers           : ['X-Namespace': args.namespace, Authorization: toAuthorization(args)],
             requestContentType: JSON
         ]
+    }
+
+    private static localConfig(args) {
+        def file = new File("${System.getProperty('user.home')}/.binarta/config.groovy")
+        mergeLocalConfig && file.exists() ? new ConfigSlurper(args.env).parse(file.toURI().toURL()) : new ConfigObject()
     }
 
     def toAuthorization(args) {

@@ -11,6 +11,7 @@ class RestBinartaClientSpec extends Specification {
     def capturedBaseUrl
 
     def setup() {
+        RestBinartaClient.mergeLocalConfig = false
         RestClientFactory.metaClass.static.clientFor = { String baseUrl ->
             capturedBaseUrl = baseUrl
             return restClient
@@ -30,9 +31,9 @@ class RestBinartaClientSpec extends Specification {
 
         where:
         env    | url
-        'dev'  | 'http://api.binarta.dev.thinkerit.be'
-        null   | 'http://api.binarta.dev.thinkerit.be'
-        'demo' | 'http://api.binarta.demo.thinkerit.be'
-        'prod' | 'https://api.binarta.com'
+        'dev'  | 'http://api.binarta.dev.thinkerit.be/'
+        null   | 'http://api.binarta.dev.thinkerit.be/'
+        'demo' | 'http://api.binarta.demo.thinkerit.be/'
+        'prod' | 'https://api.binarta.com/'
     }
 }
