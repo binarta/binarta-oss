@@ -6,6 +6,7 @@ class InMemoryBinartaClient implements BinartaClient {
     def namespace
     def authenticationPredicates = [:]
     def permissionPredicates = [:]
+    def gatewayConfigurations = [:]
 
     def requiresAuthentication(args) {
         authenticationPredicates[namespace] << [entity:args.entity, context:args.action]
@@ -23,9 +24,14 @@ class InMemoryBinartaClient implements BinartaClient {
         permissionPredicates[namespace].find { it.entity == args.entity && it.context == args.action }.permission
     }
 
+    def configureGateway(args) {
+        gatewayConfigurations[namespace][args.entity] = args.args
+    }
+
     void setNamespace(namespace) {
         this.namespace = namespace
         authenticationPredicates[namespace] = []
         permissionPredicates[namespace] = []
+        gatewayConfigurations[namespace] = [:]
     }
 }

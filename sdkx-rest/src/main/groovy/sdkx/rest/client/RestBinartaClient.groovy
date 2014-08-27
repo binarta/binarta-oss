@@ -48,4 +48,8 @@ class RestBinartaClient implements BinartaClient {
     def getRequiredPermission(args) {
         factory.getRequiredPermissionOperation().execute(args)
     }
+
+    def configureGateway(args) {
+        factory.configureGatewayOperation().execute(args)
+    }
 }
