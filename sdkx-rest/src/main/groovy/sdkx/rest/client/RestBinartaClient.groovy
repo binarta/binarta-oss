@@ -52,4 +52,8 @@ class RestBinartaClient implements BinartaClient {
     def configureGateway(args) {
         factory.configureGatewayOperation().execute(args)
     }
+
+    def addEntity(args) {
+        factory.addEntityOperation().execute(args)
+    }
 }

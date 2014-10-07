@@ -1,5 +1,6 @@
 package sdkx.rest.client.operations.factory
 
+import sdkx.rest.client.operations.AddEntityOperation
 import sdkx.rest.client.operations.ConfigureGatewayOperation
 import sdkx.rest.client.operations.GetRequiredPermissionOperation
 import sdkx.rest.client.operations.IsAuthenticationRequiredOperation
@@ -28,5 +29,9 @@ class OperationFactory {
 
     def configureGatewayOperation() {
         new ConfigureGatewayOperation(restClient:restClient, defaultArgs: defaultArgs)
+    }
+
+    def addEntityOperation() {
+        new AddEntityOperation(restClient: restClient, defaultArgs: defaultArgs)
     }
 }

@@ -8,6 +8,7 @@ interface BinartaClient {
     def requiresPermission(args)
     def getRequiredPermission(args)
     def configureGateway(args)
+    def addEntity(args)
 
     @CompileStatic
     class Unauthorized extends RuntimeException {}
